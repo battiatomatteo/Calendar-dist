@@ -1,0 +1,42 @@
+.inputO{
+    width: 40px !important;
+    color: black;
+    background-color:  #58535370 !important;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  th, td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #3b3737;
+    color: black;
+  }
+  
+  th {
+    background-color: #58535370;
+    color: rgb(32, 31, 31)
+  }
+
+
+.tdtable{
+    color: black ;
+}
+
+.inputApp{
+  background-color:  #58535370 !important;
+  color: black;
+}
+
+.buttonApp{
+  border: 1px solid black !important ;
+}
+
+
+.h3App{
+  color: black;
+}

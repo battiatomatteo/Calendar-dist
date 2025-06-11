@@ -1,0 +1,36 @@
+.container {
+    
+    height: 900px;
+    margin: auto;
+}
+
+.section {
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.section-title {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+}
+
+.section-title:hover {
+    background-color: #0056b3;
+}
+
+.section-content {
+    padding: 10px;
+    background: #ffffff;
+}
+
+.inputTableMedicine{
+    background-color: #ccc !important;
+    color: black !important;
+}

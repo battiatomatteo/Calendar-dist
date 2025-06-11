@@ -1,0 +1,49 @@
+.conteiner{
+    margin-top: 70px;
+    margin-bottom: 70px;
+    padding: 50px;
+    border-radius: 30px;
+    box-shadow: -10px 10px 10px 0px rgb(224, 221, 221);
+    background-color: #2b2a2ab8;
+}
+
+.loginContainer{
+    margin-left: 0%;
+}
+
+.container_2 {
+    display: flex !important;
+    gap: 20px !important; /* Distanza tra i div */
+}
+  
+.box {
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 10px !important;
+}
+
+.conteiner2{
+    margin-left: 20% !important;
+}
+
+.LogInLabel{
+    color: white !important;
+}
+
+
+input[type="radio"] + span {
+    color: white; /* Cambia il colore del testo qui */
+  }
+/* .error-message{color :rgb(231, 74, 74) */
+.error-message{color :rgba(149, 221, 26, 0.976)
+}
+/* rgb 209, 32, 32*/
+/*
+.button {
+    margin-left: 20% !important;
+}
+*/
+/* bottone Create a new account */
+/*button {
+    margin-left: 7% !important;
+}*/
