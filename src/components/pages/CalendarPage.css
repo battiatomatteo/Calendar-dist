@@ -78,13 +78,22 @@ p{
   background-color: #45a049;
 }
 
-/* --- Responsive: tablet --- */
+
+/* --- Responsive: tablet e telefono --- */
 @media (max-width: 700px) {
   .ReactModal__Content {
     width: 95vw;
     max-width: 95vw;
     min-width: 0;
     padding: 15px;
+    /* Centratura verticale e orizzontale */
+    margin-left: auto !important;
+    margin-right: auto !important;
+    left: 0 !important;
+    right: 0 !important;
+    top: 10vh !important;
+    bottom: auto !important;
+    transform: none !important;
   }
   .ReactModal__Content h2 {
     font-size: 1.1rem;
