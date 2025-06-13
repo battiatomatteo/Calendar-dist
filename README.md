@@ -2,95 +2,117 @@
 
 ## 📌 Descrizione generale
 
-Web app sviluppata in **React**, con l’obiettivo di offrire un **calendario medico intelligente** con funzionalità personalizzate a seconda del tipo di utente (paziente o medico).
+Web app sviluppata in **React**, con l’obiettivo di offrire un **calendario medico intelligente** con funzionalità personalizzate a seconda del tipo di utente: **Paziente**, **Medico** e **Admin**.
 
-🔗 **Link all'applicazione online**: [calendar-z0je.onrender.com](https://calendar-z0je.onrender.com)
+🔗 **Link all'app online**: [calendar-z0je.onrender.com](https://calendar-z0je.onrender.com)
 
 ---
 
 ## 👥 Tipologie di utenza
 
 ### 🔹 Paziente
-- **Calendario**: selezionando un giorno appare un **modal** con:
-  - Elenco delle medicine del giorno
-  - Orari di assunzione
-- **Notifiche push** all’orario stabilito o all’apertura del modal
-- **Benvenuto personalizzato** con nome utente
-- **Logout** accessibile in alto a destra
+- **Calendario interattivo** → cliccando su un giorno:
+  - Modal con **medicine da assumere** e **orari**
+- **Notifiche push** all’ora programmata
+- **Messaggio di benvenuto** con nome
+- **Logout** in alto a destra
+
+---
 
 ### 🔹 Medico
-- Modal giornaliero con:
-  - **Tabella appuntamenti**
-  - Sezione per **creare nuovi appuntamenti**
-  - Campo per **ricercare la cartella clinica** di un paziente
-    - Se esiste, si apre un secondo **modal** con:
-      - Stato delle medicine del giorno
-      - Lista completa dei farmaci
-      - Possibilità di **assegnare nuove medicine** (nome, dosaggio, data fine)
-- **Benvenuto personalizzato**
-- **Logout** accessibile
+- Modal con:
+  - **Tabella appuntamenti** giornalieri
+  - **Creazione nuovi appuntamenti**
+  - **Ricerca paziente**
+    - Se trovato, si apre un **secondo modal** con:
+      - Medicine del giorno
+      - Lista medicine attive
+      - Campo per **assegnare nuove medicine** (nome, dosaggio, data fine)
+- **Messaggio di benvenuto** e **logout**
+
+---
+
+### 🔹 Admin
+L’Admin ha accesso a una dashboard di controllo composta da **3 tabelle a scomparsa**, con le seguenti funzionalità:
+
+1. **Tabella 1 – Elenco pazienti**
+   - Una riga per paziente, con tutti i dati anagrafici
+
+2. **Tabella 2 – Dettagli medicine per paziente**
+   - Campo per **ricerca paziente**
+   - Se trovato:
+     - Tabella con **tutte le medicine assunte**
+     - Select con le medicine → selezionandone una:
+       - Tabella delle **somministrazioni** con:
+         - Numero somministrazione
+         - Stato
+         - Data
+
+3. **Tabella 3 – Catalogo medicine**
+   - Elenco completo delle medicine **prescrivibili dal medico**
+   - **Form per crearne una nuova**, specificando:
+     - Nome
+     - Dosaggio
+     - Altro (opzionale)
 
 ---
 
 ## 🔐 Autenticazione & Navigazione
 
-- **Login**:
-  - Username + Password
-  - Gestione credenziali con messaggio di errore
-- **Registrazione**:
-  - Accessibile da login
-  - Permette di registrare nuovi utenti con ruolo associato (paziente o medico)
+- **Login** con username e password
+  - Feedback per errori
+- **Registrazione** accessibile
+- Reindirizzamento automatico alla vista corretta in base al ruolo
 
 ---
 
 ## ⚙️ Tecnologie utilizzate
 
 ### 🧩 React
-- Libreria JavaScript per la costruzione dinamica dell’interfaccia utente.
+- Framework per costruire interfacce utente moderne e interattive
 
 ### 🔥 Firebase
-- Piattaforma di backend offerta da Google, utilizzata per:
-  - **Autenticazione utenti**
-  - **Database in tempo reale**
-  - **Gestione dati e persistenza cloud**
+- **Autenticazione**
+- **Database in tempo reale**
+- **Persistenza e gestione dati clinici**
 
 ### 📲 OneSignal
-- Servizio per l’invio di **notifiche push** su web e dispositivi mobili.  
-- In questo progetto viene utilizzato per inviare promemoria ai pazienti all'orario delle medicine.
+- Sistema di **notifiche push** per tenere informati i pazienti sugli orari dei farmaci
 
 ### 🌐 Render
-- Servizio di hosting cloud semplice da configurare.  
-- Utilizzato per:
-  - Ospitare il backend (`notifiche-server`)
-  - Deploy del progetto React come **static site**
-  - Collegamento delle due repository principali (frontend + server)
+- Hosting cloud dove vengono pubblicati:
+  - **Progetto React** come _static site_
+  - **Backend (`notifiche-server`)** collegato a Firebase  
+- Rende il deploy continuo semplice ed efficace
 
 ---
 
 ## 💡 Funzionalità principali
 
-| Funzionalità | Paziente | Medico |
-|--------------|----------|--------|
-| Calendario interattivo | ✅ | ✅ |
-| Visualizzazione medicine | ✅ | ✅ |
-| Notifiche push | ✅ | ❌ |
-| Appuntamenti giornalieri | ❌ | ✅ |
-| Ricerca cartella clinica | ❌ | ✅ |
-| Assegnazione medicine | ❌ | ✅ |
-| Modal dinamici multipli | ✅ | ✅ |
-| Autenticazione e Registro | ✅ | ✅ |
+| Funzione                              | Paziente | Medico | Admin |
+|---------------------------------------|----------|--------|--------|
+| Calendario interattivo                | ✅       | ✅     | ❌     |
+| Visualizzazione medicine              | ✅       | ✅     | ✅     |
+| Appuntamenti giornalieri              | ❌       | ✅     | ❌     |
+| Assegnazione medicine                 | ❌       | ✅     | ❌     |
+| Ricerca cartelle cliniche             | ❌       | ✅     | ✅     |
+| Notifiche push                        | ✅       | ❌     | ❌     |
+| Tabella pazienti                      | ❌       | ❌     | ✅     |
+| Storico somministrazioni              | ❌       | ❌     | ✅     |
+| Creazione nuova medicina              | ❌       | ❌     | ✅     |
 
 ---
 
-## 🚀 Estensioni future possibili
+## 🚀 Estensioni future
 
-- Analisi dati per pazienti (aderenza alla terapia)
-- Dashboard statistica per i medici
-- Invio promemoria via SMS/email
-- Sincronizzazione multi-dispositivo
+- Tracciamento storico somministrazioni per paziente
+- Notifiche via SMS/email
+- Analisi dati per il medico
+- Gestione farmaci scaduti o sospesi
+- Dashboard statistiche per l’Admin
 
 ---
 
-## 👨‍⚕️👩‍⚕️ Conclusione
+## 👨‍⚕️👩‍⚕️🛠️ Conclusione
 
-Applicazione versatile e moderna, pensata per supportare e semplificare l’interazione fra pazienti e medici nella gestione quotidiana di terapie e appuntamenti clinici.
+Un'applicazione completa e flessibile, progettata per supportare l’interazione e la gestione quotidiana della terapia tra pazienti, medici e amministratori di sistema.
