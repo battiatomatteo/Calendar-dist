@@ -51,7 +51,7 @@ const CalendarWithModal: React.FC = () => {
     };
 
     const salvaIdOneSignal = async (oneSignalId : string | null , username: string, onesignalIdSubscription : string) => {
-        // console.log("Salvataggio ID OneSignal:", oneSignalId);
+        console.log("Salvataggio ID OneSignal:", oneSignalId);
         
         try {
             if (!username) {
