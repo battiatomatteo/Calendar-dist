@@ -73,39 +73,12 @@ const CalendarWithModal: React.FC = () => {
         }
     };
 
-    useEffect(() => {
+    /*useEffect(() => {
 
         if (!window.OneSignal) {
             console.error("OneSignal non è definito!");
             return;
         }
-
-    
-        /*window.OneSignalDeferred = window.OneSignalDeferred || [];   
-        window.OneSignalDeferred.push(function (OneSignal: { Notifications: { requestPermission: () => Promise<any>; }; User: { getId: () => Promise<any>; }; getUserId: () => Promise<any>; }) {
-            console.log("OneSignal caricato:", OneSignal);
-            console.log(OneSignal.User);
-            OneSignal.Notifications.requestPermission().then(() => {
-                // Controllo versione v16+
-                if (OneSignal.User && typeof OneSignal.User.getId === "function") {
-                    OneSignal.User.getId().then((oneSignalId) => {
-                        console.log("OneSignal ID (v16+):", oneSignalId);
-                        if (oneSignalId && username) salvaIdOneSignal(oneSignalId, username);
-                    });
-                }
-                // Fallback per versioni precedenti
-                else if (typeof OneSignal.getUserId === "function") {
-                    OneSignal.getUserId().then((oneSignalId) => {
-                        console.log("OneSignal ID (legacy):", oneSignalId);
-                        if (oneSignalId && username) salvaIdOneSignal(oneSignalId, username);
-                    });
-                } else {
-                    console.error("Nessun metodo valido per ottenere l'ID OneSignal!");
-                    const oneSignalId : string | null = OneSignal.User.getId();
-                    if(username) salvaIdOneSignal(oneSignalId, username);
-                }
-            });
-        });*/
 
         if (window.OneSignal) {
             window.OneSignalDeferred = window.OneSignalDeferred || [];
@@ -149,6 +122,35 @@ const CalendarWithModal: React.FC = () => {
             });
         });
 
+    }, [username]);*/
+
+    useEffect(() => {
+        if (!window.OneSignal || !username) return;
+
+        window.OneSignalDeferred = window.OneSignalDeferred || [];
+        window.OneSignalDeferred.push(async function(OneSignal: any) {
+            // Chiedi permesso solo se necessario
+            await OneSignal.Notifications.requestPermission();
+
+            // Recupera gli ID correnti
+            let oneSignalId = null;
+            let subscriptionId = null;
+
+            if (OneSignal.User && typeof OneSignal.User.getId === "function") {
+                oneSignalId = await OneSignal.User.getId();
+            } else if (typeof OneSignal.getUserId === "function") {
+                oneSignalId = await OneSignal.getUserId();
+            }
+
+            if (OneSignal.User && typeof OneSignal.User.getSubscriptionId === "function") {
+                subscriptionId = await OneSignal.User.getSubscriptionId();
+            }
+
+            // Salva sempre per il nuovo username
+            if (oneSignalId && subscriptionId) {
+                if(username) salvaIdOneSignal(OneSignal.User.onesignalId, username, OneSignal.User.PushSubscription.id);
+            }
+        });
     }, [username]);
 
     return (
