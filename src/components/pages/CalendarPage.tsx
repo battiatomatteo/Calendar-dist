@@ -158,6 +158,10 @@ const CalendarWithModal: React.FC = () => {
             if ( oneSignalId && subscriptionId) {
                 if(username) salvaIdOneSignal(oneSignalId, username, subscriptionId);
             }
+
+            const nomeDispositivo = window.navigator.userAgent; // oppure un nome scelto dall'utente
+            OneSignal.User.setExternalId(nomeDispositivo);
+
         });
     }, [username]);
 
