@@ -160,6 +160,7 @@ const CalendarWithModal: React.FC = () => {
             }
 
             const nomeDispositivo = window.navigator.userAgent; // oppure un nome scelto dall'utente
+            console.log("Nome dispositivo impostato:", nomeDispositivo);
             OneSignal.User.setExternalId(nomeDispositivo);
 
         });
