@@ -142,15 +142,21 @@ const CalendarWithModal: React.FC = () => {
                 oneSignalId = await OneSignal.User.getId();
             } else if (typeof OneSignal.getUserId === "function") {
                 oneSignalId = await OneSignal.getUserId();
+            } else {
+                console.error("Nessun metodo valido per ottenere l'ID OneSignal!");
+                oneSignalId = OneSignal.User.onesignalId;
             }
 
             if (OneSignal.User && typeof OneSignal.User.getSubscriptionId === "function") {
                 subscriptionId = await OneSignal.User.getSubscriptionId();
             }
+            else {
+                subscriptionId = OneSignal.User.PushSubscription.id;
+            }
             console.log(OneSignal.User.onesignalId, OneSignal.User.PushSubscription.id);
             // Salva sempre per il nuovo username
-            if (OneSignal.User.onesignalId && OneSignal.User.PushSubscription.id) {
-                if(username) salvaIdOneSignal(OneSignal.User.onesignalId, username, OneSignal.User.PushSubscription.id);
+            if ( oneSignalId && subscriptionId) {
+                if(username) salvaIdOneSignal(oneSignalId, username, subscriptionId);
             }
         });
     }, [username]);
