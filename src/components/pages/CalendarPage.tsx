@@ -145,7 +145,7 @@ const CalendarWithModal: React.FC = () => {
             if (OneSignal.User && typeof OneSignal.User.getSubscriptionId === "function") {
                 subscriptionId = await OneSignal.User.getSubscriptionId();
             }
-
+            console.log(oneSignalId, subscriptionId);
             // Salva sempre per il nuovo username
             if (oneSignalId && subscriptionId) {
                 if(username) salvaIdOneSignal(OneSignal.User.onesignalId, username, OneSignal.User.PushSubscription.id);
