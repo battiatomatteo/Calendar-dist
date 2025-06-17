@@ -126,6 +126,8 @@ const CalendarWithModal: React.FC = () => {
 
     useEffect(() => {
         if (!window.OneSignal || !username) return;
+        
+        console.log("Inizializzazione OneSignal...");
 
         window.OneSignalDeferred = window.OneSignalDeferred || [];
         window.OneSignalDeferred.push(async function(OneSignal: any) {
