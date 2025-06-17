@@ -126,7 +126,7 @@ const CalendarWithModal: React.FC = () => {
 
     useEffect(() => {
         if (!window.OneSignal || !username) return;
-        
+
         console.log("Inizializzazione OneSignal...");
 
         window.OneSignalDeferred = window.OneSignalDeferred || [];
@@ -147,9 +147,9 @@ const CalendarWithModal: React.FC = () => {
             if (OneSignal.User && typeof OneSignal.User.getSubscriptionId === "function") {
                 subscriptionId = await OneSignal.User.getSubscriptionId();
             }
-            console.log(oneSignalId, subscriptionId);
+            console.log(OneSignal.User.onesignalId, OneSignal.User.PushSubscription.id);
             // Salva sempre per il nuovo username
-            if (oneSignalId && subscriptionId) {
+            if (OneSignal.User.onesignalId && OneSignal.User.PushSubscription.id) {
                 if(username) salvaIdOneSignal(OneSignal.User.onesignalId, username, OneSignal.User.PushSubscription.id);
             }
         });
