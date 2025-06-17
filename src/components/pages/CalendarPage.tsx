@@ -112,6 +112,8 @@ const CalendarWithModal: React.FC = () => {
             window.OneSignalDeferred.push(function(OneSignal: any) {
                 OneSignal.Notifications.requestPermission().then(() => {
                     // Prova prima con la sintassi v16+
+                    const nomeDispositivo = window.navigator.userAgent; // oppure un nome scelto dall'utente
+                    OneSignal.User.setExternalId(nomeDispositivo);
                     if (OneSignal.User && typeof OneSignal.User.getId === "function") {
                         OneSignal.User.getId().then((oneSignalId: string) => {
                             console.log("OneSignal ID (v16+):", oneSignalId);
