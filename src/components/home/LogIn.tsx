@@ -45,8 +45,9 @@ function LogIn() {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
     };
-    
-    const handleChangeAscii = (e: ChangeEvent<HTMLInputElement>) => {
+
+
+    const handleChangeAsciiNoBlankSpace = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         if(!value.localeCompare("")) {
             setFormData(prev => ({ ...prev, [name]: value }));
@@ -57,7 +58,20 @@ function LogIn() {
                 setFormData(prev => ({ ...prev, [name]: value }));
             }
         }
-        
+    };
+
+    
+    const handleChangeAscii = (e: ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        if(!value.localeCompare("")) {
+            setFormData(prev => ({ ...prev, [name]: value }));
+        }
+        else{
+            const last = value.slice(-1);
+            if(isValidName(last)){
+                setFormData(prev => ({ ...prev, [name]: value }));
+            }
+        }
     };
 
     const handleChangeTel = (e: ChangeEvent<HTMLInputElement>) => {
@@ -81,6 +95,11 @@ function LogIn() {
         }
     };
 
+    // Funzioni per controllare se il cognome è fomrato da più parole
+    function isValidName(last: string) {
+        return /^[a-zA-Z\s]+$/.test(last) && last.length === 1; // Controlla se è una lettera o uno spazio
+    }
+    
     function isLetter(char: string) {
         // Controlla se il carattere è una lettera usando una RegExp
         return /^[a-zA-Z]$/.test(char);
@@ -195,7 +214,19 @@ function LogIn() {
                 }
             }
             else setRegError("Password non valida . Inserire almeno 8 caratteri con : maiuscole, numeri e simboli !"); // Imposta il messaggio di errore
-        }
+        };
+        
+    };
+
+    const handleShowRegistration = () => {
+        // Reset dei campi
+        setFormData(prev => ({
+            ...prev,
+            usernameOrMail: '',
+            password: ''
+        }));
+        // Mostra la parte di registrazione
+        setIsVisible(true);
     };
 
     return (
@@ -213,7 +244,7 @@ function LogIn() {
                                 <div className="box">
                                     <label className="LogInLabel">Username</label>
                                     <br />
-                                    <input type="text" name='usernameOrMail' placeholder='username' required value={formData.usernameOrMail} onChange={handleChange} />
+                                    <input type="text" name='usernameOrMail' placeholder='username' required value={formData.usernameOrMail} onChange={handleChangeAsciiNoBlankSpace} />
                                     {userError && <div className="error-message">{userError}</div>} {/* Mostra il messaggio di errore */}
                                     <br />
                                     <br />
@@ -283,7 +314,7 @@ function LogIn() {
                         <form onSubmit={onSubmit} className='form'>
                             <label className="LogInLabel">Username or mail</label>
                             <br />
-                            <input type="text" name='usernameOrMail' placeholder='username' required onChange={handleChange} />
+                            <input type="text" name='usernameOrMail' placeholder='username' required onChange={handleChangeAsciiNoBlankSpace} />
                             <br />
                             <br />
                             <label htmlFor="Password" className='LogInLabel'>Password</label>
@@ -301,7 +332,7 @@ function LogIn() {
                 )}
                 <br />
                 <button type="button" onClick={() => setIsVisible(!isVisible)}>
-                    {isVisible ? 'Torna al LogIn' : 'Create a new account'}
+                    {isVisible ? 'Torna al LogIn' : <button onClick={handleShowRegistration}>Crea un nuovo account</button>}
                 </button>
             </div>
         </div>
@@ -309,3 +340,17 @@ function LogIn() {
 }
 
 export default LogIn;
+
+/*
+container {
+    container2{
+        box{
+        }
+        box{
+        }
+        loginContainer{
+        }
+    }
+}
+
+*/
