@@ -40,6 +40,21 @@ input[type="radio"] + span {
     color: white;
 }
 
+/* Rendi tutti gli input larghi quanto il contenitore */
+.loginContainer input[type="text"],
+.loginContainer input[type="password"],
+.loginContainer input[type="email"],
+.loginContainer input[type="number"],
+.loginContainer input[type="date"],
+.box input[type="text"],
+.box input[type="password"],
+.box input[type="email"],
+.box input[type="number"],
+.box input[type="date"] {
+  width: 100%;
+  box-sizing: border-box;
+}
+
 .error-message {
     color: rgba(149, 221, 26, 0.976)
 }
@@ -87,5 +102,6 @@ input[type="radio"] + span {
     }
     input, button {
         font-size: 1rem !important;
+        width: 100%;
     }
 }
