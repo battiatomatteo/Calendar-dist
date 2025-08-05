@@ -59,6 +59,7 @@
   display: grid !important;
   grid-template-columns: repeat(7, 1fr) !important;
   gap: 0 !important;
+  
 }
 
 .react-calendar__month-view__days__day {  /*caselle calendario*/
@@ -73,6 +74,8 @@
   font-size: 16px !important;
   font-weight: normal !important;
   cursor: pointer;
+  min-width: 50px !important;
+  border-radius: 0% !important;
 }
 
 .react-calendar__month-view__days__day--weekend {  /*weekend in rosso*/
@@ -116,7 +119,7 @@ p{
  /* Stile base (desktop/tablet) */
 .ReactModal__Content {
   position: relative;
-  background: rgb(36, 33, 33);
+  background-color: rgb(253, 252, 252) !important;
   border-radius: 10px;
   padding: 20px;
   width: 80%;
@@ -200,4 +203,14 @@ p{
 
 .LogOutButton{
   margin-left: 90% !important;
+}
+
+/* Risolve le celle che escono */
+.react-calendar__month-view__days__day,
+.react-calendar__tile {
+  box-sizing: border-box; /* Conteggia i bordi nello spazio della cella */
+  width: 100% !important; /* Assicura che la cella si ridimensioni */
+  height: auto !important; /* Rimuove altezze forzate inutili */
+  min-height: 35px !important; /* Puoi ridurre se vuoi celle più piccole */
+  padding: 4px !important; /* Spazio interno più piccolo */
 }
