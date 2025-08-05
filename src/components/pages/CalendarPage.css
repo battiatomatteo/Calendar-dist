@@ -13,28 +13,52 @@
   color: white !important;
   border-bottom: 1px solid #555555;
   border-radius: 6px 6px 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
 }
 
 .react-calendar__navigation button {
   color: white !important;
   background: none;
   border: none;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 5px 10px;
 }
 
 .react-calendar__navigation button:hover {
   background-color: #404040 !important;
+  border-radius: 4px;
+}
+
+.react-calendar__navigation__label {
+  font-weight: bold;
+  font-size: 18px;
 }
 
 .react-calendar__month-view__weekdays {
   background-color: #404040;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
 }
 
 .react-calendar__month-view__weekdays__weekday {
   background-color: #404040 !important;
   color: white !important;
   font-weight: bold;
-  padding: 10px;
+  padding: 12px 8px;
   border: 1px solid #555555;
+  text-align: center;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+.react-calendar__month-view__days {
+  display: grid !important;
+  grid-template-columns: repeat(7, 1fr) !important;
+  gap: 0 !important;
 }
 
 .react-calendar__month-view__days__day {  /*caselle calendario*/
@@ -42,7 +66,13 @@
   color: #ffffff !important;
   border: 1px solid #555555;
   transition: all 0.2s;
-  min-height: 40px;
+  min-height: 50px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 16px !important;
+  font-weight: normal !important;
+  cursor: pointer;
 }
 
 .react-calendar__month-view__days__day--weekend {  /*weekend in rosso*/
@@ -57,11 +87,20 @@
 .react-calendar__tile--active {   /*casella selezionata*/
   background-color: #4a9b8e !important;
   color: white !important;
-  font-weight: bold;
+  font-weight: bold !important;
 }
 
 .react-calendar__month-view__days__day--neighboringMonth {
   color: #888888 !important;
+  background-color: #353535 !important;
+}
+
+.react-calendar__tile {
+  max-width: 100% !important;
+  text-align: center !important;
+  padding: 0 !important;
+  background: none !important;
+  border: none !important;
 }
 
 h2{
