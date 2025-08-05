@@ -49,6 +49,11 @@
     z-index: 999 !important;
 }
 
+/* Sfondo bianco per il modal */
+.ReactModal__Content {
+    background-color: white !important;
+}
+
 .ReactModal__Content h2 {
     margin-top: 0;
     font-size: 20px;

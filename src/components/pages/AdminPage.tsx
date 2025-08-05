@@ -2,6 +2,7 @@ import './AdminPage.css'
 import { SetStateAction, useEffect, useState } from "react";
 import { db } from '../firebase-config';
 import { collection, doc, getDocs, setDoc } from 'firebase/firestore';
+import { useNavigate } from "react-router-dom";
 
 interface SectionProps {
     title: string;
@@ -63,6 +64,7 @@ const Section: React.FC<SectionProps> = ({ title, children, isOpen, onToggle }) 
 
 
 const AdminPage: React.FC = () => {
+    const navigate = useNavigate();
     const [isVisible, setIsVisible] = useState(false);
     const [id_medicina, setId_medicina] = useState('');
     const [dosaggio_medicina, setDosaggio_medicina] = useState('');
@@ -260,8 +262,13 @@ const AdminPage: React.FC = () => {
       setNomePazienteControllo(e.target.value);
     };
 
+    const handleLogout = () => {
+        navigate('/');
+    };
+
     return (
       <div className="container">
+        <button className="LogOutButton" onClick={handleLogout}>Logout</button>
         <Section title="Tabella Utenti" isOpen={openSection === 1} onToggle={() => toggleSection(1)}>
               <table className="table">
                   <thead>

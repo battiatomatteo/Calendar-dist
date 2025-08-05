@@ -1,5 +1,5 @@
 .container {
-    
+
     height: 900px;
     margin: auto;
 }
@@ -31,6 +31,22 @@
 }
 
 .inputTableMedicine{
-    background-color: #ccc !important;
-    color: black !important;
+  width: 200px !important;
+  height: 30px !important;
+}
+
+.LogOutButton{
+  margin-left: 90% !important;
+  background-color: #4caf50;
+  color: rgb(255, 255, 255);
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-bottom: 20px;
+}
+
+.LogOutButton:hover {
+  background-color: #45a049;
 }
