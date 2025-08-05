@@ -1,10 +1,10 @@
 .ModalPrescriptionWindow{
     position: fixed !important;
     top: 50% !important;
-    left: 50% !important;
+    left: calc(50% + 240px) !important;
     right: auto !important;
     bottom: auto !important;
-    transform: translate(-50%, -50%) translateX(250px) !important;
+    transform: translate(-50%, -50%) !important;
     background-color: rgb(36, 33, 33) !important;
     width: 450px !important;
     height: 600px !important;
@@ -24,10 +24,10 @@
 .ReactModal__Content {
     position: fixed !important;
     top: 50% !important;
-    left: 50% !important;
+    left: calc(50% - 240px) !important;
     right: auto !important;
     bottom: auto !important;
-    transform: translate(-50%, -50%) translateX(-250px) !important;
+    transform: translate(-50%, -50%) !important;
     background: rgb(36, 33, 33) !important;
     color: white !important;
     border-radius: 0px !important;

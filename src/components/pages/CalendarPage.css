@@ -4,7 +4,7 @@
     padding: 20px;
     min-height: 100vh;
     box-sizing: border-box;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: #3a3a3a;
 }
 
 .LogOutButton {
@@ -36,12 +36,13 @@ h3 {
 /* Calendar responsive styles */
 .react-calendar {
     width: 100%;
-    max-width: 800px;
+    max-width: 600px;
     margin: 0 auto;
-    background: white;
-    border: 1px solid #a0a096;
+    background: #4a4a4a;
+    border: 1px solid #666;
     border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    color: white;
 }
 
 .react-calendar button {
@@ -50,22 +51,50 @@ h3 {
     outline: none;
     padding: 10px;
     font-size: 16px;
+    color: white;
+    background: transparent;
+}
+
+.react-calendar__navigation button {
+    background: #5a5a5a;
+    color: white;
+}
+
+.react-calendar__navigation button:hover {
+    background: #6a6a6a;
+}
+
+.react-calendar__month-view__weekdays__weekday {
+    background: #5a5a5a;
+    color: #ccc;
+    font-weight: bold;
+    padding: 10px;
 }
 
 .react-calendar__tile {
-    background: none;
+    background: #4a4a4a;
     border: none;
     padding: 15px 10px;
     font-size: 14px;
+    color: white;
 }
 
 .react-calendar__tile:hover {
-    background-color: #e6f3ff;
+    background-color: #5a5a5a;
 }
 
 .react-calendar__tile--active {
-    background-color: #006edc;
+    background-color: #4a9a4a !important;
     color: white;
+}
+
+.react-calendar__tile--now {
+    background: #6a6a6a;
+    color: white;
+}
+
+.react-calendar__tile--now:hover {
+    background: #7a7a7a;
 }
 
 /* Modal responsive styles */

@@ -8,13 +8,13 @@
     padding: 20px;
     box-sizing: border-box;
     transition: all 0.3s ease;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: #f5f5f5;
 }
 
 .conteiner2 {
     background: rgb(36, 33, 33);
     border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.4);
     padding: 40px;
     width: 100%;
     max-width: 800px;
