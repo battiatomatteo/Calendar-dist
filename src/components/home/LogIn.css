@@ -8,10 +8,11 @@
     padding: 20px;
     box-sizing: border-box;
     transition: all 0.3s ease;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
 .conteiner2 {
-    background: white;
+    background: rgb(36, 33, 33);
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     padding: 40px;
@@ -19,6 +20,7 @@
     max-width: 800px;
     min-width: 320px;
     box-sizing: border-box;
+    color: white;
 }
 
 .loginContainer {
@@ -52,7 +54,7 @@
 
 .LogInLabel {
     font-weight: bold;
-    color: #333;
+    color: white;
     margin-bottom: 5px;
     font-size: 16px;
 }
@@ -69,6 +71,8 @@ input[type="date"] {
     font-size: 16px;
     box-sizing: border-box;
     transition: border-color 0.3s ease;
+    background-color: #58535370;
+    color: white;
 }
 
 input[type="text"]:focus,
@@ -83,7 +87,7 @@ input[type="date"]:focus {
 
 input[type="submit"],
 button {
-    background-color: #007bff;
+    background-color: #4CAF50;
     color: white;
     border: none;
     padding: 12px 24px;
@@ -96,7 +100,7 @@ button {
 
 input[type="submit"]:hover,
 button:hover {
-    background-color: #0056b3;
+    background-color: #45a049;
 }
 
 .tipoUtente {
@@ -116,7 +120,7 @@ button:hover {
 
 h3 {
     text-align: center;
-    color: #333;
+    color: white;
     margin-bottom: 30px;
     font-size: 24px;
 }
