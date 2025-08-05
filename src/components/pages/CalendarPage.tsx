@@ -7,6 +7,7 @@ import "react-calendar/dist/Calendar.css";
 import PatientMessageWindow from "./PatientMessageWindow";
 import DoctorMessageWindow from './DoctorMessageWindow';
 import { doc, getFirestore, setDoc } from "firebase/firestore";
+import { NotificationService } from "../../services/NotificationService";
 
 declare global {
   interface Window {
@@ -156,7 +157,19 @@ const CalendarWithModal: React.FC = () => {
             console.log(OneSignal.User.onesignalId, OneSignal.User.PushSubscription.id);
             // Salva sempre per il nuovo username
             if ( oneSignalId && subscriptionId) {
-                if(username) salvaIdOneSignal(oneSignalId, username, subscriptionId);
+                if(username) {
+                    salvaIdOneSignal(oneSignalId, username, subscriptionId);
+                    
+                    // Invia notifiche di benvenuto e programma promemoria
+                    setTimeout(async () => {
+                        if (tipoUtente === 'medico') {
+                            await NotificationService.sendWelcomeNotificationToDoctor(username);
+                        } else if (tipoUtente === 'paziente') {
+                            await NotificationService.sendWelcomeNotificationToPatient(username);
+                            await NotificationService.scheduleMedicineReminders(username);
+                        }
+                    }, 3000); // Aspetta 3 secondi per assicurarsi che OneSignal sia completamente inizializzato
+                }
             }
 
             const nomeDispositivo = window.navigator.userAgent; // oppure un nome scelto dall'utente
@@ -164,14 +177,12 @@ const CalendarWithModal: React.FC = () => {
             OneSignal.User.setExternalId(nomeDispositivo);
 
         });
-    }, [username]);
+    }, [username, tipoUtente]);
 
     return (
-        <div>
+        <div className="calendar-container">
             <button className="LogOutButton" onClick={handleLogout}>Logout</button>
-            <br />
             <h3>Benvenuto "{username}" nella pagina dedicata al calendario.</h3>
-            <br />
             <Calendar onClickDay={handleDateClick} />
 
             <Modal isOpen={isModalOpen} onRequestClose={closeModal}>

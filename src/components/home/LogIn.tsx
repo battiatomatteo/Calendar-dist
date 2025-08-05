@@ -332,7 +332,7 @@ function LogIn() {
                 )}
                 <br />
                 <button type="button" onClick={() => setIsVisible(!isVisible)}>
-                    {isVisible ? 'Torna al LogIn' : <button onClick={handleShowRegistration}>Crea un nuovo account</button>}
+                    {isVisible ? 'Torna al LogIn' : 'Crea un nuovo account'}
                 </button>
             </div>
         </div>

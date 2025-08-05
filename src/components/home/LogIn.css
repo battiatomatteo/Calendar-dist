@@ -1,107 +1,222 @@
+
+/* Base styles */
 .conteiner {
-    margin-top: 70px;
-    margin-bottom: 70px;
-    padding: 50px;
-    border-radius: 30px;
-    box-shadow: -10px 10px 10px 0px rgb(224, 221, 221);
-    background-color: #2b2a2ab8;
-    width: 25%;
-    min-width: 320px;
-    max-width: 400px;
-    margin-left: auto;
-    margin-right: auto;
-    transition: width 0.3s, padding 0.3s;
-}
-
-.loginContainer {
-    margin-left: 0%;
-}
-
-.container_2 {
-    display: flex !important;
-    gap: 20px !important;
-}
-
-.box {
-    display: flex !important;
-    flex-direction: column !important;
-    padding: 10px !important;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
 }
 
 .conteiner2 {
-    margin-left: 0 !important;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    width: 100%;
+    max-width: 800px;
+    min-width: 320px;
+    box-sizing: border-box;
+}
+
+.loginContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.container_2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.box {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 400px;
 }
 
 .LogInLabel {
-    color: white !important;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+    font-size: 16px;
 }
 
-input[type="radio"] + span {
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="number"],
+input[type="date"] {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus,
+input[type="number"]:focus,
+input[type="date"]:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+input[type="submit"],
+button {
+    background-color: #007bff;
     color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    min-width: 150px;
 }
 
-/* Rendi tutti gli input larghi quanto il contenitore */
-.loginContainer input[type="text"],
-.loginContainer input[type="password"],
-.loginContainer input[type="email"],
-.loginContainer input[type="number"],
-.loginContainer input[type="date"],
-.box input[type="text"],
-.box input[type="password"],
-.box input[type="email"],
-.box input[type="number"],
-.box input[type="date"] {
-  width: 100%;
-  box-sizing: border-box;
+input[type="submit"]:hover,
+button:hover {
+    background-color: #0056b3;
+}
+
+.tipoUtente {
+    margin-right: 8px;
 }
 
 .error-message {
-    color: rgba(149, 221, 26, 0.976)
+    color: #dc3545;
+    font-size: 14px;
+    margin-top: 5px;
+    text-align: center;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 4px;
+    padding: 8px;
 }
 
-/* --- RESPONSIVE --- */
-@media (max-width: 900px) {
-    .conteiner {
-        width: 60%;
+h3 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+    font-size: 24px;
+}
+
+/* Tablet styles */
+@media (max-width: 768px) {
+    .conteiner2 {
         padding: 30px;
-        margin-top: 40px;
-        margin-bottom: 40px;
-        min-width: 0;
-        max-width: 90vw;
-        margin-left: 15px;
+        margin: 10px;
     }
+    
     .container_2 {
-        flex-direction: column !important;
-        gap: 10px !important;
-        align-items: stretch;
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .LogInLabel {
+        font-size: 14px;
+    }
+    
+    input[type="text"],
+    input[type="password"],
+    input[type="email"],
+    input[type="number"],
+    input[type="date"] {
+        padding: 10px;
+        font-size: 14px;
+    }
+    
+    h3 {
+        font-size: 20px;
     }
 }
 
-@media (max-width: 600px) {
+/* Mobile styles */
+@media (max-width: 480px) {
     .conteiner {
-        width: 95vw;
         padding: 10px;
-        margin-top: 10px;
-        margin-bottom: 10px;
-        border-radius: 15px;
-        min-width: 200px;
-        max-width: 98vw;
-        margin-left: 15% !important;
-        margin-top: 10% !important;
     }
-    .container_2 {
-        flex-direction: column !important;
-        gap: 5px !important;
-        align-items: stretch;
+    
+    .conteiner2 {
+        padding: 20px;
+        margin: 5px;
+        border-radius: 8px;
     }
+    
     .box {
-        padding: 5px !important;
+        gap: 10px;
     }
+    
     .LogInLabel {
-        font-size: 1rem !important;
+        font-size: 13px;
     }
-    input, button {
-        font-size: 1rem !important;
-        width: 100%;
+    
+    input[type="text"],
+    input[type="password"],
+    input[type="email"],
+    input[type="number"],
+    input[type="date"] {
+        padding: 8px;
+        font-size: 13px;
+    }
+    
+    input[type="submit"],
+    button {
+        padding: 10px 20px;
+        font-size: 14px;
+        min-width: 120px;
+    }
+    
+    h3 {
+        font-size: 18px;
+        margin-bottom: 20px;
+    }
+    
+    .error-message {
+        font-size: 12px;
+        padding: 6px;
+    }
+}
+
+/* Extra small mobile */
+@media (max-width: 320px) {
+    .conteiner2 {
+        padding: 15px;
+    }
+    
+    input[type="text"],
+    input[type="password"],
+    input[type="email"],
+    input[type="number"],
+    input[type="date"] {
+        font-size: 12px;
+    }
+    
+    .LogInLabel {
+        font-size: 12px;
+    }
+    
+    h3 {
+        font-size: 16px;
     }
 }
