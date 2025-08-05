@@ -2,36 +2,66 @@
   width: 100% !important;
   max-width: 600px !important;
   margin: auto;
-  border: 2px solid #242424 ;
-  border-radius: 8px 8px 0px 0px;
+  border: 2px solid #555555;
+  border-radius: 8px;
   font-family: Arial, sans-serif;
-  background-color: #b1b1b170 !important;
+  background-color: #2d2d2d !important;
 }
 
-.react-calendar__navigation {  /*barra di navigazioone sopra il calendario*/
-  background-color: #242424;
-  color: white !important ;
-  border-bottom: 2px solid #242424;
-  border-radius: 8px 8px 0 0;
+.react-calendar__navigation {  /*barra di navigazione sopra il calendario*/
+  background-color: #2d2d2d;
+  color: white !important;
+  border-bottom: 1px solid #555555;
+  border-radius: 6px 6px 0 0;
+}
+
+.react-calendar__navigation button {
+  color: white !important;
+  background: none;
+  border: none;
+}
+
+.react-calendar__navigation button:hover {
+  background-color: #404040 !important;
+}
+
+.react-calendar__month-view__weekdays {
+  background-color: #404040;
+}
+
+.react-calendar__month-view__weekdays__weekday {
+  background-color: #404040 !important;
+  color: white !important;
+  font-weight: bold;
+  padding: 10px;
+  border: 1px solid #555555;
 }
 
 .react-calendar__month-view__days__day {  /*caselle calendario*/
-  background-color: #333333 !important;  
-  color: #ffffff;
- /* border-radius: 8%;*/
+  background-color: #404040 !important;  
+  color: #ffffff !important;
+  border: 1px solid #555555;
   transition: all 0.2s;
+  min-height: 40px;
+}
+
+.react-calendar__month-view__days__day--weekend {  /*weekend in rosso*/
+  color: #ff6b6b !important;
 }
 
 .react-calendar__month-view__days__day:hover {  /*caselle su cui passa il mouse*/
-  background-color: #0a777045 !important;
-  color: white;
+  background-color: #4a9b8e !important;
+  color: white !important;
 }
 
 .react-calendar__tile--active {   /*casella selezionata*/
-  background-color: #0a777045!important;
-  color: white;
+  background-color: #4a9b8e !important;
+  color: white !important;
   font-weight: bold;
-  border-radius: 8%;
+}
+
+.react-calendar__month-view__days__day--neighboringMonth {
+  color: #888888 !important;
 }
 
 h2{
