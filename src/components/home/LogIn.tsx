@@ -218,7 +218,7 @@ function LogIn() {
         
     };
 
-    const handleShowRegistration = () => {
+    /*const handleShowRegistration = () => {
         // Reset dei campi
         setFormData(prev => ({
             ...prev,
@@ -227,7 +227,7 @@ function LogIn() {
         }));
         // Mostra la parte di registrazione
         setIsVisible(true);
-    };
+    };*/
 
     return (
         <div className='conteiner' style={{
