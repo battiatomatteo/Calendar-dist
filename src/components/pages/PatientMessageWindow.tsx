@@ -52,7 +52,7 @@ const PatientMessageWindow: React.FC<Props> = ({ access, giorno , patientName}) 
   // const [listaSomministrazioni,setListaSomministrazioni] = useState<ListaSomministrazioniPaziente[]>([]);
   // Manteniamo lo stato prescriptions per usarlo nel render se necessario
   // const [prescriptions, setPrescriptions] = useState<Medicine_paziente[]>([]);
-  
+
   const [giornoListaSomministrazioni, setGiornoListaSomministrazioni] = useState<listaSomministrazioniGiornaliere[]>([]);
 
 
@@ -266,7 +266,7 @@ const PatientMessageWindow: React.FC<Props> = ({ access, giorno , patientName}) 
   }, [giornoListaSomministrazioni]); // Questo effect si esegue quando le somministrazioni giornaliere vengono caricate/aggiornate
 
 
-  
+
 
 
   const handleSave= async () =>  {
@@ -354,7 +354,15 @@ const PatientMessageWindow: React.FC<Props> = ({ access, giorno , patientName}) 
       console.error("Errore durante l'invio della notifica:", error);
     }
   };
-  
+
+  // FIX: Rimuovo la funzione di notifica automatica per evitare spam
+  // quando il medico visita la cartella del paziente
+  const sendNotificationToPatient = async () => {
+    console.log("⚠️ Notifica automatica disabilitata per evitare spam quando il medico visita la cartella");
+    // Questa funzione è stata disabilitata per evitare notifiche indesiderate
+    // quando il medico apre la cartella del paziente
+  };
+
   return(
     <div>
       {!access &&
@@ -385,12 +393,12 @@ const PatientMessageWindow: React.FC<Props> = ({ access, giorno , patientName}) 
           !loading && <p>Nessuna somministrazione programmata per oggi.</p>
       )}
 
-      {(giornoListaSomministrazioni.length > 0) && (!access) ? 
+      {(giornoListaSomministrazioni.length > 0) && (!access) ?
         <div>
           <br />
           <button className='buttonApp' onClick={handleSave}>Salva</button>
         </div>
-        : 
+        :
         null
       }
 

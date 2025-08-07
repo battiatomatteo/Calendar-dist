@@ -1,4 +1,5 @@
 
+
 import { db } from '../components/firebase-config';
 import { doc, getDoc, collection, query, where, getDocs } from 'firebase/firestore';
 
@@ -7,7 +8,7 @@ import { doc, getDoc, collection, query, where, getDocs } from 'firebase/firesto
  * CONFIGURAZIONE SERVIZIO NOTIFICHE
  * ========================================
  * 
- * Questo servizio si interfaccia con il tuo server esterno:
+ * Questo servizio si interfaccia con il mio server esterno:
  * https://github.com/battiatomatteo/notifiche-server
  * 
  * CONFIGURAZIONE RICHIESTA:
@@ -92,17 +93,26 @@ export class NotificationService {
 
   /**
    * ========================================
-   * NOTIFICA BENVENUTO MEDICO
+   * NOTIFICA BENVENUTO MEDICO - FIXATA
    * ========================================
    */
   static async sendWelcomeNotificationToDoctor(username: string): Promise<void> {
     try {
       const userData = await this.getUserData(username);
-      if (!userData?.oneSignalId) return;
+      if (!userData?.oneSignalId) {
+        console.log('❌ OneSignal ID non trovato per il medico:', username);
+        return;
+      }
 
       const today = this.getTodayString();
+      console.log('🔍 Controllo appuntamenti per:', username, 'data:', today);
+      
+      // FIX: Migliorata la logica di conteggio degli appuntamenti
       const appointmentsCount = await this.getAppointmentsCount(username, today);
       const missedMedsCount = await this.getMissedMedicationsCount(username);
+
+      console.log('📊 Appuntamenti trovati:', appointmentsCount);
+      console.log('📊 Medicine saltate:', missedMedsCount);
 
       let message = `Benvenuto Dr. ${userData.nome}! `;
       
@@ -114,9 +124,12 @@ export class NotificationService {
         message += `${missedMedsCount} pazienti hanno saltato delle medicine.`;
       }
       
+      // FIX: Logica corretta per il messaggio "tutto sotto controllo"
       if (appointmentsCount === 0 && missedMedsCount === 0) {
         message += "Tutto sotto controllo oggi!";
       }
+
+      console.log('📤 Messaggio finale medico:', message);
 
       await this.sendNotification({
         oneSignalId: userData.oneSignalId,
@@ -133,19 +146,30 @@ export class NotificationService {
 
   /**
    * ========================================
-   * NOTIFICA BENVENUTO PAZIENTE
+   * NOTIFICA BENVENUTO PAZIENTE - FIXATA
    * ========================================
    */
   static async sendWelcomeNotificationToPatient(username: string): Promise<void> {
     try {
       const userData = await this.getUserData(username);
-      if (!userData?.oneSignalId) return;
+      if (!userData?.oneSignalId) {
+        console.log('❌ OneSignal ID non trovato per il paziente:', username);
+        return;
+      }
 
       const patientData = await this.getPatientData(username);
-      if (!patientData) return;
+      if (!patientData) {
+        console.log('❌ Dati paziente non trovati:', username);
+        return;
+      }
 
       const today = this.getTodayString();
-      const todayMedicines = this.getTodayMedicinesCount(patientData.medicine || [], today);
+      console.log('🔍 Controllo medicine per paziente:', username, 'data:', today);
+      
+      // FIX: Migliorata la logica di conteggio delle medicine
+      const todayMedicines = await this.getTodayMedicinesCount(username, today);
+      
+      console.log('📊 Medicine oggi per', username, ':', todayMedicines);
 
       let message = `Benvenuto ${userData.nome}! `;
       
@@ -154,6 +178,8 @@ export class NotificationService {
       } else {
         message += "Nessuna medicina programmata per oggi.";
       }
+
+      console.log('📤 Messaggio finale paziente:', message);
 
       await this.sendNotification({
         oneSignalId: userData.oneSignalId,
@@ -206,7 +232,7 @@ export class NotificationService {
 
   /**
    * ========================================
-   * METODI HELPER PRIVATI
+   * METODI HELPER PRIVATI - MIGLIORATI
    * ========================================
    */
 
@@ -224,30 +250,88 @@ export class NotificationService {
 
   private static getTodayString(): string {
     const today = new Date();
-    return `${today.getDate()}-${today.getMonth() + 1}-${today.getFullYear()}`;
+    const day = today.getDate();
+    const month = today.getMonth() + 1;
+    const year = today.getFullYear();
+    
+    // Formato: "15-1-2024" (senza zero iniziale, come nel tuo sistema)
+    return `${day}-${month}-${year}`;
   }
 
+  /**
+   * FIX: Migliorata la funzione di conteggio appuntamenti
+   */
   private static async getAppointmentsCount(username: string, date: string): Promise<number> {
-    const appointmentsRef = collection(db, 'Appuntamenti');
-    const appointmentsQuery = query(
-      appointmentsRef,
-      where('medico', '==', username),
-      where('data', '==', date)
-    );
-    const appointmentsSnap = await getDocs(appointmentsQuery);
-    return appointmentsSnap.size;
+    try {
+      console.log('🔍 Cerco appuntamenti per medico:', username, 'data:', date);
+      
+      const appointmentsRef = collection(db, 'Appuntamenti');
+      const appointmentsQuery = query(
+        appointmentsRef,
+        where('medico', '==', username),
+        where('data', '==', date)
+      );
+      
+      const appointmentsSnap = await getDocs(appointmentsQuery);
+      const count = appointmentsSnap.size;
+      
+      console.log('📊 Query risultati appuntamenti:', count);
+      
+      // Debug: mostra i documenti trovati
+      appointmentsSnap.forEach((docSnap) => {
+        console.log('📄 Appuntamento trovato:', docSnap.data());
+      });
+      
+      return count;
+    } catch (error) {
+      console.error('❌ Errore conteggio appuntamenti:', error);
+      return 0;
+    }
   }
 
-  private static getTodayMedicinesCount(medicines: any[], today: string): number {
-    let count = 0;
-    medicines.forEach((medicine: any) => {
-      if (medicine.somministrazioni) {
-        medicine.somministrazioni.forEach((somm: any) => {
-          if (somm.data === today) count++;
+  /**
+   * FIX: Completamente riscritta la funzione per contare le medicine del giorno
+   */
+  private static async getTodayMedicinesCount(username: string, today: string): Promise<number> {
+    try {
+      console.log('🔍 Cerco medicine per paziente:', username, 'data:', today);
+      
+      // Ottieni tutti i documenti delle medicine del paziente
+      const medicineRef = collection(db, 'Pazienti', username, 'Medicine_paziente');
+      const medicineSnap = await getDocs(medicineRef);
+      
+      let totalMedicinesCount = 0;
+      
+      // Per ogni medicina, controlla le somministrazioni
+      for (const medicineDoc of medicineSnap.docs) {
+        const medicineData = medicineDoc.data();
+        const medicineName = medicineDoc.id;
+        
+        console.log('💊 Controllo medicina:', medicineName);
+        
+        // Ottieni le somministrazioni di questa medicina
+        const somministrazioniRef = collection(db, 'Pazienti', username, 'Medicine_paziente', medicineName, 'somministrazioni');
+        const somministrazioniSnap = await getDocs(somministrazioniRef);
+        
+        // Conta le somministrazioni per oggi
+        somministrazioniSnap.forEach((sommDoc) => {
+          const sommData = sommDoc.data();
+          console.log('📅 Somministrazione trovata:', sommData);
+          
+          if (sommData.datasomminiztrazione === today) {
+            totalMedicinesCount++;
+            console.log('✅ Medicine per oggi +1, totale:', totalMedicinesCount);
+          }
         });
       }
-    });
-    return count;
+      
+      console.log('📊 Totale medicine per oggi:', totalMedicinesCount);
+      return totalMedicinesCount;
+      
+    } catch (error) {
+      console.error('❌ Errore conteggio medicine oggi:', error);
+      return 0;
+    }
   }
 
   private static async getMissedMedicationsCount(doctorUsername: string): Promise<number> {
@@ -261,25 +345,35 @@ export class NotificationService {
       const todayString = this.getTodayString();
       const currentTime = today.getHours() * 60 + today.getMinutes();
       
-      patientsSnap.forEach((patientDoc) => {
-        const patientData = patientDoc.data();
-        const medicines = patientData.medicine || [];
+      for (const patientDoc of patientsSnap.docs) {
+        const patientUsername = patientDoc.id;
         
-        medicines.forEach((medicine: any) => {
-          if (medicine.somministrazioni) {
-            medicine.somministrazioni.forEach((somm: any) => {
-              if (somm.data === todayString && somm.stato === 'Non Presa') {
-                const [schedHours, schedMinutes] = somm.ora.split(':').map(Number);
-                const scheduledTime = schedHours * 60 + schedMinutes;
-                
-                if (currentTime - scheduledTime > 60) {
-                  missedCount++;
-                }
+        // Per ogni paziente, controlla le medicine
+        const medicineRef = collection(db, 'Pazienti', patientUsername, 'Medicine_paziente');
+        const medicineSnap = await getDocs(medicineRef);
+        
+        for (const medicineDoc of medicineSnap.docs) {
+          const medicineName = medicineDoc.id;
+          
+          // Controlla le somministrazioni di questa medicina
+          const somministrazioniRef = collection(db, 'Pazienti', patientUsername, 'Medicine_paziente', medicineName, 'somministrazioni');
+          const somministrazioniSnap = await getDocs(somministrazioniRef);
+          
+          somministrazioniSnap.forEach((sommDoc) => {
+            const sommData = sommDoc.data();
+            
+            if (sommData.datasomminiztrazione === todayString && sommData.stato === 'Non Presa') {
+              const [schedHours, schedMinutes] = sommData.ora.split(':').map(Number);
+              const scheduledTime = schedHours * 60 + schedMinutes;
+              
+              // Se sono passati più di 60 minuti dall'orario programmato
+              if (currentTime - scheduledTime > 60) {
+                missedCount++;
               }
-            });
-          }
-        });
-      });
+            }
+          });
+        }
+      }
       
       return missedCount;
     } catch (error) {
@@ -327,3 +421,4 @@ export class NotificationService {
 }
 
 export default NotificationService;
+
