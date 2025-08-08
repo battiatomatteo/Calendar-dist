@@ -317,7 +317,9 @@ export class NotificationService {
         somministrazioniSnap.forEach((sommDoc) => {
           const sommData = sommDoc.data();
           console.log('📅 Somministrazione trovata:', sommData);
-          
+
+          console.log('📅 Data somministrazione:', sommData.datasomminiztrazione, 'Oggi:', today);  // Debug : controllo data
+
           if (sommData.datasomminiztrazione === today) {
             totalMedicinesCount++;
             console.log('✅ Medicine per oggi +1, totale:', totalMedicinesCount);
