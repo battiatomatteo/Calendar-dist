@@ -304,7 +304,7 @@ export class NotificationService {
       
       // Per ogni medicina, controlla le somministrazioni
       for (const medicineDoc of medicineSnap.docs) {
-        const medicineData = medicineDoc.data();
+        // const medicineData = medicineDoc.data();
         const medicineName = medicineDoc.id;
         
         console.log('💊 Controllo medicina:', medicineName);
