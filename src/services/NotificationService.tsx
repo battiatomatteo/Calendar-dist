@@ -320,14 +320,19 @@ export class NotificationService {
 
           console.log('📅 Data somministrazione:', sommData.data_somministrazione, 'Oggi:', today);  // Debug : controllo data
 
+          console.log('🔑 Chiavi di sommData:', Object.keys(sommData));
+
+          if ('data_somministrazione' in sommData) {
+            console.log('✅ Campo presente:', sommData.data_somministrazione);
+          } else {
+            console.warn('❗ Campo "data_somministrazione" NON presente');
+          }
+
           if (sommData.data_somministrazione === today) {
             totalMedicinesCount++;
             console.log('✅ Medicine per oggi +1, totale:', totalMedicinesCount);
           }
-          if(sommData.data_somministrazione.equals(today)) {
-            totalMedicinesCount++;
-            console.log('✅ Medicine per oggi +1, totale:', totalMedicinesCount);
-          }
+          
         });
       }
       
