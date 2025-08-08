@@ -324,6 +324,10 @@ export class NotificationService {
             totalMedicinesCount++;
             console.log('✅ Medicine per oggi +1, totale:', totalMedicinesCount);
           }
+          if(sommData.data_somministrazione.equals(today)) {
+            totalMedicinesCount++;
+            console.log('✅ Medicine per oggi +1, totale:', totalMedicinesCount);
+          }
         });
       }
       
