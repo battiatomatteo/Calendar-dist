@@ -298,7 +298,7 @@ const PatientMessageWindow: React.FC<Props> = ({ access, giorno , patientName}) 
     // Solo se il paziente ha medicine oggi e non siamo in loading
     if (!loading && giornoListaSomministrazioni.length > 0 && usernamePatient) {
       // Qui puoi chiamare una funzione che invia la notifica
-      inviaNotificaMedicineOggi(usernamePatient);
+      //inviaNotificaMedicineOggi(usernamePatient);
     }
   }, [loading, giornoListaSomministrazioni, usernamePatient]);
 
@@ -318,7 +318,7 @@ const PatientMessageWindow: React.FC<Props> = ({ access, giorno , patientName}) 
        return <div>Impossibile caricare i dati del paziente. Controllare l'username.</div>;
   }
 
-  const inviaNotificaMedicineOggi = async (usernamePatient: string) => {
+  /*const inviaNotificaMedicineOggi = async (usernamePatient: string) => {
     try {
       // Recupera l'ID OneSignal dal documento utente su Firestore
       const db = getFirestore();
@@ -350,7 +350,7 @@ const PatientMessageWindow: React.FC<Props> = ({ access, giorno , patientName}) 
     } catch (error) {
       console.error("Errore durante l'invio della notifica:", error);
     }
-  };
+  };*/
 
   return(
     <div>
