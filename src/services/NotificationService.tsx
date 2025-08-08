@@ -318,9 +318,9 @@ export class NotificationService {
           const sommData = sommDoc.data();
           console.log('📅 Somministrazione trovata:', sommData);
 
-          console.log('📅 Data somministrazione:', sommData.datasomminiztrazione, 'Oggi:', today);  // Debug : controllo data
+          console.log('📅 Data somministrazione:', sommData.data_somministrazione, 'Oggi:', today);  // Debug : controllo data
 
-          if (sommData.datasomminiztrazione === today) {
+          if (sommData.data_somministrazione === today) {
             totalMedicinesCount++;
             console.log('✅ Medicine per oggi +1, totale:', totalMedicinesCount);
           }
