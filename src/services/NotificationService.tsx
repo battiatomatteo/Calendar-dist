@@ -114,7 +114,7 @@ export class NotificationService {
       console.log('📊 Appuntamenti trovati:', appointmentsCount);
       console.log('📊 Medicine saltate:', missedMedsCount);
 
-      let message = `Benvenuto Dr.`+ username +` ! `;
+      let message = `Benvenuto Dr.`+ username +` ! `;   
       
       if (appointmentsCount > 0) {
         message += `Hai ${appointmentsCount} appuntamento/i oggi. `;
