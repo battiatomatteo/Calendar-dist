@@ -74,57 +74,6 @@ const CalendarWithModal: React.FC = () => {
         }
     };
 
-    /*useEffect(() => {
-
-        if (!window.OneSignal) {
-            console.error("OneSignal non è definito!");
-            return;
-        }
-
-        if (window.OneSignal) {
-            window.OneSignalDeferred = window.OneSignalDeferred || [];
-            window.OneSignalDeferred.push(function(OneSignal: any) {
-                OneSignal.Notifications.requestPermission().then(() => {
-                    // Prova prima con la sintassi v16+
-                    const nomeDispositivo = window.navigator.userAgent; // oppure un nome scelto dall'utente
-                    OneSignal.User.setExternalId(nomeDispositivo);
-                    console.log("Nome dispositivo impostato:", nomeDispositivo);
-                    if (OneSignal.User && typeof OneSignal.User.getId === "function") {
-                        OneSignal.User.getId().then((oneSignalId: string) => {
-                            console.log("OneSignal ID (v16+):", oneSignalId);
-                            if (oneSignalId && username) salvaIdOneSignal(oneSignalId, username,  OneSignal.User.PushSubscription.id);
-                        });
-                    }
-                    // Fallback per versioni precedenti
-                    else if (typeof OneSignal.getUserId === "function") {
-                        OneSignal.getUserId().then((oneSignalId: string) => {
-                            console.log("OneSignal ID (legacy):", oneSignalId);
-                            if (oneSignalId && username) salvaIdOneSignal(oneSignalId, username,  OneSignal.User.PushSubscription.id);
-                        });
-                    } else {
-                        console.error("Nessun metodo valido per ottenere l'ID OneSignal!");
-                        // console.log("onesignal user : ",OneSignal.User.PushSubscription.id);
-                        // console.log("onesignal subscription status:", OneSignal.User.isSubscribed);
-                        // console.log("onesignal subscription : ", OneSignal.User.subscriptionId);
-                        if(username) salvaIdOneSignal(OneSignal.User.onesignalId, username, OneSignal.User.PushSubscription.id);
-                    }
-                });
-            });
-        }
-
-        window.OneSignal.push(function() {
-            window.OneSignal.isPushNotificationsEnabled(function(isEnabled : any) {
-                console.log("Subscription status:", isEnabled);
-        });
-
-        // Or listen for changes
-        window.OneSignal.on('subscriptionChange', function(isSubscribed: any) {
-                console.log("Subscription changed to:", isSubscribed);
-            });
-        });
-
-    }, [username]);*/
-
     useEffect(() => {
         if (!window.OneSignal || !username) return;
 
