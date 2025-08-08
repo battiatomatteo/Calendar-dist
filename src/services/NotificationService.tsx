@@ -171,7 +171,7 @@ export class NotificationService {
       
       console.log('📊 Medicine oggi per', username, ':', todayMedicines);
 
-      let message = `Benvenuto ${userData.nome}! `;
+      let message = `Benvenuto `+username+` ! `;
       
       if (todayMedicines > 0) {
         message += `Hai ${todayMedicines} medicina/e da prendere oggi.`;
@@ -265,14 +265,14 @@ export class NotificationService {
     try {
       console.log('🔍 Cerco appuntamenti per medico:', username, 'data:', date);
       
-      const appointmentsRef = collection(db, 'Appuntamenti');
-      const appointmentsQuery = query(
+      const appointmentsRef = collection(db, 'Appuntamenti', date, username);
+      /*const appointmentsQuery = query(
         appointmentsRef,
         where('medico', '==', username),
         where('data', '==', date)
-      );
+      );*/
       
-      const appointmentsSnap = await getDocs(appointmentsQuery);
+      const appointmentsSnap = await getDocs(appointmentsRef);
       const count = appointmentsSnap.size;
       
       console.log('📊 Query risultati appuntamenti:', count);
