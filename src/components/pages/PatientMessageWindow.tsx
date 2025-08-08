@@ -357,11 +357,11 @@ const PatientMessageWindow: React.FC<Props> = ({ access, giorno , patientName}) 
 
   // FIX: Rimuovo la funzione di notifica automatica per evitare spam
   // quando il medico visita la cartella del paziente
-  const sendNotificationToPatient = async () => {
-    console.log("⚠️ Notifica automatica disabilitata per evitare spam quando il medico visita la cartella");
+  //const sendNotificationToPatient = async () => {
+    //console.log("⚠️ Notifica automatica disabilitata per evitare spam quando il medico visita la cartella");
     // Questa funzione è stata disabilitata per evitare notifiche indesiderate
     // quando il medico apre la cartella del paziente
-  };
+  //};
 
   return(
     <div>
