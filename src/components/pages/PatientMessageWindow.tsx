@@ -318,39 +318,6 @@ const PatientMessageWindow: React.FC<Props> = ({ access, giorno , patientName}) 
        return <div>Impossibile caricare i dati del paziente. Controllare l'username.</div>;
   }
 
-  /*const inviaNotificaMedicineOggi = async (usernamePatient: string) => {
-    try {
-      // Recupera l'ID OneSignal dal documento utente su Firestore
-      const db = getFirestore();
-      const userRef = doc(db, "Utenti", usernamePatient);
-      const userSnap = await getDoc(userRef);
-      const oneSignalId = userSnap.data()?.oneSignalId;
-      const subscriptionId = userSnap.data()?.onesignalIdSubscription; // Aggiungi l'ID della sottoscrizione se necessario
-
-      if (!oneSignalId) {
-        console.warn("OneSignal ID non trovato per il paziente:", usernamePatient);
-        return;
-      }
-      console.log("Invio notifica a OneSignal ID:", oneSignalId);
-      // Chiama la tua Cloud Function o endpoint backend
-      await fetch("https://notifiche-server.onrender.com/notifica", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          oneSignalId,
-          subscriptionId, // Aggiungi l'ID della sottoscrizione se necessario
-          titolo: "Promemoria medicine",
-          messaggio: "Hai delle medicine da prendere oggi!"
-        })
-      });
-      // Puoi mostrare un messaggio di conferma se vuoi
-      console.log("usernamePatient:", usernamePatient);
-      console.log("OneSignal ID usato per la notifica:", oneSignalId);
-      console.log("Notifica inviata!");
-    } catch (error) {
-      console.error("Errore durante l'invio della notifica:", error);
-    }
-  };*/
 
   return(
     <div>

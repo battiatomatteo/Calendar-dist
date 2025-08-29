@@ -30,7 +30,7 @@ export interface NotificationData {
 
 /**
  * ========================================
- * SERVIZIO NOTIFICHE OTTIMIZZATO
+ * SERVIZIO NOTIFICHE 
  * ========================================
  */
 export class NotificationService {
@@ -50,11 +50,11 @@ export class NotificationService {
    */
   static async sendNotification(notificationData: NotificationData): Promise<boolean> {
     try {
-      console.log('📤 Invio notifica:', notificationData);
+      console.log('Invio notifica:', notificationData);
       
       // Validazione essenziale
       if (!notificationData.oneSignalId || !notificationData.title || !notificationData.message) {
-        console.error('❌ Dati notifica incompleti');
+        console.error('Dati notifica incompleti');
         return false;
       }
 
@@ -78,41 +78,41 @@ export class NotificationService {
       });
 
       if (response.ok) {
-        console.log('✅ Notifica inviata con successo');
+        console.log('Notifica inviata con successo');
         return true;
       } else {
-        console.error('❌ Errore server:', response.status);
+        console.error('Errore server:', response.status);
         return false;
       }
 
     } catch (error) {
-      console.error('❌ Errore invio notifica:', error);
+      console.error('Errore invio notifica:', error);
       return false;
     }
   }
 
   /**
    * ========================================
-   * NOTIFICA BENVENUTO MEDICO - FIXATA
+   * NOTIFICA BENVENUTO MEDICO
    * ========================================
    */
   static async sendWelcomeNotificationToDoctor(username: string): Promise<void> {
     try {
       const userData = await this.getUserData(username);
       if (!userData?.oneSignalId) {
-        console.log('❌ OneSignal ID non trovato per il medico:', username);
+        console.log('OneSignal ID non trovato per il medico:', username);
         return;
       }
 
       const today = this.getTodayString();
-      console.log('🔍 Controllo appuntamenti per:', username, 'data:', today);
+      console.log('Controllo appuntamenti per:', username, 'data:', today);
       
-      // FIX: Migliorata la logica di conteggio degli appuntamenti
+    
       const appointmentsCount = await this.getAppointmentsCount(username, today);
       const missedMedsCount = await this.getMissedMedicationsCount(username);
 
-      console.log('📊 Appuntamenti trovati:', appointmentsCount);
-      console.log('📊 Medicine saltate:', missedMedsCount);
+      console.log('Appuntamenti trovati:', appointmentsCount);
+      console.log('Medicine saltate:', missedMedsCount);
 
       let message = `Benvenuto Dr.`+ username +` ! `;   
       
@@ -129,7 +129,7 @@ export class NotificationService {
         message += "Tutto sotto controllo oggi!";
       }
 
-      console.log('📤 Messaggio finale medico:', message);
+      console.log('Messaggio finale medico:', message);
 
       await this.sendNotification({
         oneSignalId: userData.oneSignalId,
@@ -140,36 +140,36 @@ export class NotificationService {
       });
 
     } catch (error) {
-      console.error('❌ Errore notifica medico:', error);
+      console.error('Errore notifica medico:', error);
     }
   }
 
   /**
    * ========================================
-   * NOTIFICA BENVENUTO PAZIENTE - FIXATA
+   * NOTIFICA BENVENUTO PAZIENTE 
    * ========================================
    */
   static async sendWelcomeNotificationToPatient(username: string): Promise<void> {
     try {
       const userData = await this.getUserData(username);
       if (!userData?.oneSignalId) {
-        console.log('❌ OneSignal ID non trovato per il paziente:', username);
+        console.log('OneSignal ID non trovato per il paziente:', username);
         return;
       }
 
       const patientData = await this.getPatientData(username);
       if (!patientData) {
-        console.log('❌ Dati paziente non trovati:', username);
+        console.log('Dati paziente non trovati:', username);
         return;
       }
 
       const today = this.getTodayString();
-      console.log('🔍 Controllo medicine per paziente:', username, 'data:', today);
+      console.log('Controllo medicine per paziente:', username, 'data:', today);
       
       // FIX: Migliorata la logica di conteggio delle medicine
       const todayMedicines = await this.getTodayMedicinesCount(username, today);
       
-      console.log('📊 Medicine oggi per', username, ':', todayMedicines);
+      console.log('Medicine oggi per', username, ':', todayMedicines);
 
       let message = `Benvenuto `+username+` ! `;
       
@@ -179,7 +179,7 @@ export class NotificationService {
         message += "Nessuna medicina programmata per oggi.";
       }
 
-      console.log('📤 Messaggio finale paziente:', message);
+      console.log('Messaggio finale paziente:', message);
 
       await this.sendNotification({
         oneSignalId: userData.oneSignalId,
@@ -196,11 +196,9 @@ export class NotificationService {
 
   /**
    * ========================================
-   * PROGRAMMAZIONE PROMEMORIA (SEMPLIFICATA)
+   * PROGRAMMAZIONE PROMEMORIA 
    * ========================================
-   * 
-   * Nota: Per un sistema di produzione, considera l'uso di cron jobs
-   * sul server o Firebase Cloud Functions
+   * Programma promemoria per le medicine del giorno
    */
   static async scheduleMedicineReminders(username: string): Promise<void> {
     try {
@@ -223,16 +221,16 @@ export class NotificationService {
         }
       });
 
-      console.log(`✅ Programmati ${scheduledCount} promemoria per ${username}`);
+      console.log(`Programmati ${scheduledCount} promemoria per ${username}`);
 
     } catch (error) {
-      console.error('❌ Errore programmazione promemoria:', error);
+      console.error('Errore programmazione promemoria:', error);
     }
   }
 
   /**
    * ========================================
-   * METODI HELPER PRIVATI - MIGLIORATI
+   * METODI HELPER PRIVATI
    * ========================================
    */
 
@@ -254,13 +252,11 @@ export class NotificationService {
     const month = today.getMonth() + 1;
     const year = today.getFullYear();
     
-    // Formato: "15-1-2024" (senza zero iniziale, come nel tuo sistema)
+    // Formato: "15-1-2024" (senza zero iniziale)
     return `${day}-${month}-${year}`;
   }
 
-  /**
-   * FIX: Migliorata la funzione di conteggio appuntamenti
-   */
+
   private static async getAppointmentsCount(username: string, date: string): Promise<number> {
     try {
       console.log('🔍 Cerco appuntamenti per medico:', username, 'data:', date);
@@ -289,12 +285,9 @@ export class NotificationService {
     }
   }
 
-  /**
-   * FIX: Completamente riscritta la funzione per contare le medicine del giorno
-   */
   private static async getTodayMedicinesCount(username: string, today: string): Promise<number> {
     try {
-      console.log('🔍 Cerco medicine per paziente:', username, 'data:', today);
+      console.log('Cerco medicine per paziente:', username, 'data:', today);
       
       // Ottieni tutti i documenti delle medicine del paziente
       const medicineRef = collection(db, 'Pazienti', username, 'Medicine_paziente');
@@ -323,24 +316,24 @@ export class NotificationService {
           console.log('🔑 Chiavi di sommData:', Object.keys(sommData));
 
           if ('data_somministrazione' in sommData) {
-            console.log('✅ Campo presente:', sommData.data_somministrazione);
+            console.log('Campo presente:', sommData.data_somministrazione);
           } else {
-            console.warn('❗ Campo "data_somministrazione" NON presente');
+            console.warn('Campo "data_somministrazione" NON presente');
           }
 
           if (sommData.data_somministrazione === today) {
             totalMedicinesCount++;
-            console.log('✅ Medicine per oggi +1, totale:', totalMedicinesCount);
+            console.log('Medicine per oggi +1, totale:', totalMedicinesCount);
           }
           
         });
       }
       
-      console.log('📊 Totale medicine per oggi:', totalMedicinesCount);
+      console.log('Totale medicine per oggi:', totalMedicinesCount);
       return totalMedicinesCount;
       
     } catch (error) {
-      console.error('❌ Errore conteggio medicine oggi:', error);
+      console.error('Errore conteggio medicine oggi:', error);
       return 0;
     }
   }
@@ -388,7 +381,7 @@ export class NotificationService {
       
       return missedCount;
     } catch (error) {
-      console.error('❌ Errore controllo medicine saltate:', error);
+      console.error('Errore controllo medicine saltate:', error);
       return 0;
     }
   }
@@ -418,7 +411,7 @@ export class NotificationService {
           await this.sendNotification({
             oneSignalId: userData.oneSignalId,
             subscriptionId: userData.onesignalIdSubscription,
-            title: '💊 È ora di prendere la medicina!',
+            title: 'È ora di prendere la medicina!',
             message: `È ora di prendere ${medicineName} alle ${time}`,
             data: { type: 'medicine_reminder', medicineName, time }
           });
@@ -426,10 +419,120 @@ export class NotificationService {
       }, delay);
       
     } catch (error) {
-      console.error('❌ Errore programmazione notifica:', error);
+      console.error('Errore programmazione notifica:', error);
     }
   }
 }
 
 export default NotificationService;
 
+/**
+ * Ok, in questo caso l'approccio è diverso. Poiché hai già un server Node.js esterno, puoi spostare la logica di programmazione delle notifiche lì, eliminando la necessità di Firebase Cloud Functions per questo compito specifico.
+
+Soluzione con il Tuo Server Esterno
+La soluzione consiste nel far sì che il tuo server si occupi di due cose: ricevere la richiesta di programmazione dall'app React e poi, all'orario giusto, inviare la notifica.
+
+Crea un Endpoint API sul tuo Server:
+Sul tuo server Node.js, crea un nuovo endpoint HTTP (ad esempio, /schedule-notification). L'app React invierà una richiesta a questo endpoint ogni volta che un utente salva o aggiorna un orario di una medicina. Il payload di questa richiesta dovrebbe includere username, medicineName e time.
+
+Usa setTimeout sul Server:
+All'interno di questo endpoint, puoi usare setTimeout come avevi fatto in React, ma con una differenza cruciale: il codice verrà eseguito sul server, che è sempre attivo e non viene sospeso come un browser. Calcola il delay e imposta il setTimeout.
+
+Gestisci la Persistenza:
+C'è un problema. Se il tuo server si riavvia (per un aggiornamento, un crash o per manutenzione), tutti i setTimeout attivi verranno persi. Per risolvere questo, devi salvare le notifiche programmate in un database (come MongoDB, che sembra tu stia usando, o un altro). Quando il server si riavvia, deve leggere dal database tutte le notifiche non ancora inviate e riprogrammarle.
+
+Codice di Esempio (concettuale)
+Ecco come potresti implementare questa logica sul tuo server.
+
+1. Aggiungi la Dipendenza:
+Assicurati di avere una libreria per gestire le richieste HTTP (come axios o node-fetch) per interagire con l'API di OneSignal.
+
+2. Crea l'Endpoint API:
+
+JavaScript
+
+// server.js (o file dell'API)
+const express = require('express');
+const app = express();
+const mongoose = require('mongoose'); // o il tuo database
+
+// Modello per salvare le notifiche programmate nel database
+const ScheduledNotificationSchema = new mongoose.Schema({
+  username: String,
+  medicineName: String,
+  time: Date,
+  sent: { type: Boolean, default: false }
+});
+const ScheduledNotification = mongoose.model('ScheduledNotification', ScheduledNotificationSchema);
+
+// Endpoint per programmare una notifica
+app.post('/schedule-notification', async (req, res) => {
+  const { username, medicineName, time } = req.body;
+
+  try {
+    const [hours, minutes] = time.split(':').map(Number);
+    const notificationTime = new Date();
+    notificationTime.setHours(hours, minutes, 0, 0);
+
+    // Se l'orario è già passato, programma per il giorno dopo
+    if (notificationTime <= new Date()) {
+      notificationTime.setDate(notificationTime.getDate() + 1);
+    }
+
+    // Salva la notifica nel database
+    const newNotification = new ScheduledNotification({
+      username,
+      medicineName,
+      time: notificationTime
+    });
+    await newNotification.save();
+
+    // Riprogramma la notifica sul server
+    scheduleNotificationJob(newNotification);
+
+    res.status(200).send({ message: 'Notifica programmata con successo.' });
+  } catch (error) {
+    console.error('Errore nella programmazione della notifica:', error);
+    res.status(500).send({ message: 'Errore interno del server.' });
+  }
+});
+3. Logica di Programmazione e Ripristino:
+
+JavaScript
+
+// Funzione per programmare l'invio
+const scheduleNotificationJob = (notification) => {
+  const delay = notification.time.getTime() - new Date().getTime();
+
+  if (delay > 0) {
+    setTimeout(async () => {
+      // Chiama la tua funzione di invio di OneSignal
+      // (assumendo che sendNotification sia definita altrove)
+      // Esempio: await sendNotificationToUser(notification.username, notification.medicineName);
+      
+      console.log(`Invio notifica per ${notification.medicineName} a ${notification.username}`);
+
+      // Aggiorna lo stato nel database dopo l'invio
+      notification.sent = true;
+      await notification.save();
+    }, delay);
+  }
+};
+
+// Funzione di ripristino all'avvio del server
+const restoreScheduledNotifications = async () => {
+  try {
+    const pendingNotifications = await ScheduledNotification.find({ sent: false, time: { $gt: new Date() } });
+    pendingNotifications.forEach(notification => {
+      scheduleNotificationJob(notification);
+    });
+    console.log(`Ripristinate ${pendingNotifications.length} notifiche programmate.`);
+  } catch (error) {
+    console.error('Errore nel ripristino delle notifiche:', error);
+  }
+};
+
+// Chiama questa funzione all'avvio del server
+// restoreScheduledNotifications();
+Questo approccio ti dà il pieno controllo e risolve i problemi di affidabilità legati alla sospensione del browser, rendendo le tue notifiche molto più robuste.
+ */
